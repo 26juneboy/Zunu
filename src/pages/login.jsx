@@ -15,8 +15,8 @@ const Login = () => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        background: "#f5f5f5",
         fontFamily: theme.fontFamily,
+        minHeight: "100vh",
       }}
     >
       <Card
