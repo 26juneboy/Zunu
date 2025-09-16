@@ -1,12 +1,38 @@
-import React from "react";
-import { Form, Input, Button, Typography, Card } from "antd";
+import React, { useState } from "react";
+import { Form, Input, Button, Typography, Card, message } from "antd";
 import { theme } from "../theme/theme";
+import { sendOTP, validateOTP } from "../services/service";
+import { useNavigate } from "react-router-dom";
 
 const { Title } = Typography;
 
 const Login = () => {
+  const [otpSent, setOtpSent] = useState(false);
+  const navigate = useNavigate();
   const onFinish = async (values) => {
-    console.log("Login Data:", values);
+    if (!otpSent) {
+      // Send OTP
+      try {
+        const response = await sendOTP(values);
+        if (response.responseStatus === "SUCCESS") {
+          setOtpSent(true);
+        } else {
+          setOtpSent(false);
+        }
+      } catch (error) {
+        message.error("Failed to send OTP", error);
+      }
+    } else {
+      // Handle login with OTP
+      const response = await validateOTP(values);
+      if (response.responseStatus === "SUCCESS") {
+        localStorage.setItem("access_token", response.data.access_token);
+        navigate("/quotes");
+      } else {
+        navigate("/login");
+      }
+      setOtpSent(false);
+    }
   };
 
   return (
@@ -36,7 +62,7 @@ const Login = () => {
         <Form layout="vertical" onFinish={onFinish} style={{ marginTop: 20 }}>
           {/* Phone Number */}
           <Form.Item
-            name="phone"
+            name="phoneNumber"
             label="Phone Number"
             rules={[
               { required: true, message: "Please enter phone number" },
@@ -58,11 +84,12 @@ const Login = () => {
           <Form.Item
             name="otp"
             label="OTP"
-            rules={[{ required: true, message: "Please enter OTP" }]}
+            rules={[{ required: otpSent, message: "Please enter OTP" }]}
           >
             <Input
               type="number"
               placeholder="Enter OTP"
+              disabled={!otpSent} // disable until OTP is sent
               style={{
                 borderRadius: theme.buttonRadius,
                 borderColor: theme.inputBorderColor,
@@ -81,7 +108,7 @@ const Login = () => {
                 borderRadius: theme.buttonRadius,
               }}
             >
-              Login
+              {otpSent ? "Login" : "Send OTP"}
             </Button>
           </Form.Item>
         </Form>

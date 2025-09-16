@@ -1,7 +1,8 @@
 import React from "react";
-import { Button, Typography } from "antd";
+import { Table, Button, Typography } from "antd";
 import { theme } from "../theme/theme";
-import "./quotes.css"; // 👈 import css file
+import "./quotes.css";
+import { useNavigate } from "react-router-dom";
 
 const { Title } = Typography;
 
@@ -33,38 +34,73 @@ const data = [
 ];
 
 const QuotesPage = () => {
+  const navigate = useNavigate();
+  // Define table columns
+  const columns = [
+    {
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
+      render: (text) => <span style={{ fontWeight: "bold" }}>{text}</span>,
+    },
+    {
+      title: "Address",
+      dataIndex: "address",
+      key: "address",
+      ellipsis: true,
+    },
+    {
+      title: "Budget",
+      dataIndex: "budget",
+      key: "budget",
+    },
+    {
+      title: "Action",
+      key: "action",
+      render: () => (
+        <Button
+          type="primary"
+          style={{
+            background: theme.secondaryColor,
+            borderRadius: theme.buttonRadius,
+          }}
+        >
+          Prepare Quote
+        </Button>
+      ),
+    },
+  ];
+
+  const handleLogout = () => {
+    console.log("User logged out");
+    navigate("/login");
+  };
+
   return (
     <div className="quotes-container" style={{ fontFamily: theme.fontFamily }}>
       {/* Heading */}
-      <Title level={2} className="quotes-heading">
-        Quotes
-      </Title>
-
-      <div className="quotes-list">
-        {data.map((item) => (
-          <div key={item.id} className="quote-card">
-            {/* Left Text Section */}
-            <div className="quote-text">
-              <p className="quote-name">{item.name}</p>
-              <p className="quote-address">{item.address}</p>
-              <p className="quote-budget">{item.budget}</p>
-            </div>
-
-            {/* Right Button Section */}
-            <div className="quote-button">
-              <Button
-                type="primary"
-                style={{
-                  background: theme.secondaryColor,
-                  borderRadius: theme.buttonRadius,
-                }}
-              >
-                Prepare Quote
-              </Button>
-            </div>
-          </div>
-        ))}
+      <div className="quotes-title-container" style={{}}>
+        <Title level={2} className="quotes-heading">
+          Quotes
+        </Title>
+        <Button
+          type="default"
+          danger
+          onClick={handleLogout}
+          style={{ borderRadius: theme.buttonRadius }}
+        >
+          Logout
+        </Button>
       </div>
+
+      <Table
+        dataSource={data}
+        columns={columns}
+        rowKey="id"
+        bordered
+        pagination={true}
+        className="quotes-table"
+      />
     </div>
   );
 };

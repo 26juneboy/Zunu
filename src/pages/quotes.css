@@ -3,64 +3,85 @@
   background: var(--background-color, #f5f5f5);
   min-height: 100vh;
 }
-
+/* Title Container */
+.quotes-title-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  background: #fff;
+  padding: 5px 15px;
+  border-bottom: 2px solid #ddd;
+  border-radius: 6px;
+}
 /* Heading */
 .quotes-heading {
   margin: 0 0 0 0;
-  padding: 16px 20px;
+  padding: 10px 20px;
   background: #ffffff;
-  border-bottom: 2px solid #e0e0e0; /* underline effect */
   text-align: left;
 }
 
-/* Cards container → Grid layout */
-.quotes-list {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 👈 3 cards per row */
-  gap: 20px;
-  margin: 20px 20px;
+.quotes-table {
+  /* margin: 0 16px; */
 }
 
-/* Individual card */
-.quote-card {
+.quotes-table {
+  margin: 20px;
   border-radius: 12px;
-  background: #ffffff;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  padding: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  overflow: hidden;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  background: #fff;
+  border: 1px solid #e0e0e0;
+}
+
+/* Table header */
+.quotes-table .ant-table-thead > tr > th {
+  background: #f5f7fa;
+  font-weight: 600;
+  color: #2c3e50;
+  text-align: center;
+  padding: 14px;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+/* Table rows */
+.quotes-table .ant-table-tbody > tr > td {
+  padding: 14px;
+  text-align: center;
+  border-bottom: 1px solid #f0f0f0;
+  color: #333;
+}
+
+/* Zebra striping */
+.quotes-table .ant-table-tbody > tr:nth-child(odd) > td {
+  background-color: #fafafa;
 }
 
 /* Hover effect */
-.quote-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+.quotes-table .ant-table-tbody > tr:hover > td {
+  background-color: #f0f9ff;
+  /* transition: background 0.2s ease-in-out; */
 }
 
-/* Left text */
-.quote-text {
-  flex: 1;
-  padding-right: 10px;
+/* Pagination */
+.quotes-table .ant-table-pagination {
+  margin: 16px 0;
+  text-align: right;
 }
 
-.quote-name {
-  font-size: 16px;
-  font-weight: bold;
-  margin: 0;
+/* Rounded corners for first/last rows */
+.quotes-table .ant-table-tbody > tr:first-child > td:first-child {
+  border-top-left-radius: 12px;
 }
-
-.quote-address {
-  font-size: 14px;
-  margin: 8px 0;
-  word-wrap: break-word;
+.quotes-table .ant-table-tbody > tr:first-child > td:last-child {
+  border-top-right-radius: 12px;
 }
-
-.quote-budget {
-  font-size: 14px;
-  margin: 0;
-  color: #555;
+.quotes-table .ant-table-tbody > tr:last-child > td:first-child {
+  border-bottom-left-radius: 12px;
+}
+.quotes-table .ant-table-tbody > tr:last-child > td:last-child {
+  border-bottom-right-radius: 12px;
 }
 
 /* Button */
@@ -78,15 +99,5 @@
 @media (max-width: 768px) {
   .quotes-list {
     grid-template-columns: 1fr; /* 1 per row on mobile */
-  }
-
-  .quote-card {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .quote-button {
-    margin-top: 12px;
-    align-self: flex-end;
   }
 }
