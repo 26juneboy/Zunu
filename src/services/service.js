@@ -26,3 +26,7 @@ export const validateOTP = async (payload) => {
   const response = await api.post("/auth/validateOtp", payload);
   return response.data;
 };
+export const getQuotesListings = async () => {
+  const response = await api.get("/listings");
+  return response.data;
+};

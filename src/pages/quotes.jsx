@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Table, Button, Typography } from "antd";
 import { theme } from "../theme/theme";
 import "./quotes.css";
 import { useNavigate } from "react-router-dom";
+import { getQuotesListings } from "../services/service";
 
 const { Title } = Typography;
 
@@ -72,10 +73,22 @@ const QuotesPage = () => {
   ];
 
   const handleLogout = () => {
-    console.log("User logged out");
     navigate("/login");
+    localStorage.clear();
   };
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await getQuotesListings();
+        console.log(response);
+      } catch (error) {
+        console.error("Error fetching quotes:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
   return (
     <div className="quotes-container" style={{ fontFamily: theme.fontFamily }}>
       {/* Heading */}
