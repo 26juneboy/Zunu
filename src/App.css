@@ -1,0 +1,4 @@
+.ant-input[disabled]::placeholder {
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.65); /* optional: make it look closer to normal text */
+}

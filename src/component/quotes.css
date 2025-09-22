@@ -3,28 +3,6 @@
   background: var(--background-color, #f5f5f5);
   min-height: 100vh;
 }
-/* Title Container */
-.quotes-title-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-  background: #fff;
-  padding: 5px 15px;
-  border-bottom: 2px solid #ddd;
-  border-radius: 6px;
-}
-/* Heading */
-.quotes-heading {
-  margin: 0 0 0 0;
-  padding: 10px 20px;
-  background: #ffffff;
-  text-align: left;
-}
-
-.quotes-table {
-  /* margin: 0 16px; */
-}
 
 .quotes-table {
   margin: 20px;

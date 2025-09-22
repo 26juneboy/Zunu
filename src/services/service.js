@@ -30,3 +30,8 @@ export const getQuotesListings = async (current, pageSize) => {
   const response = await api.get(`/listings?page=${current}&size=${pageSize}`);
   return response.data;
 };
+
+export const getQuoteByUserID = async () => {
+  const response = await api.get(`/quotes/user/603`);
+  return response.data;
+};

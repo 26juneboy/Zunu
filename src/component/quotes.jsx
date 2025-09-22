@@ -3,6 +3,7 @@ import { Table, Button, Typography } from "antd";
 import { theme } from "../theme/theme";
 import "./quotes.css";
 import { useNavigate } from "react-router-dom";
+import Navbar from "./navbar";
 
 const { Title } = Typography;
 
@@ -23,6 +24,9 @@ const Quotes = (data, fetchPaginatedData) => {
     pageSizeOptions: ["5", "10", "20", "50"],
   });
 
+  const handlePreviewQuote = (name, address) => {
+    navigate(`/quote?homeOwnerName=${name}&address=${address}`);
+  };
   // Define table columns
   const columns = [
     {
@@ -52,6 +56,7 @@ const Quotes = (data, fetchPaginatedData) => {
             background: theme.secondaryColor,
             borderRadius: theme.buttonRadius,
           }}
+          onClick={() => handlePreviewQuote(record.companyName, record.address)}
         >
           {record.actionFlags.quoteEditability === 1
             ? "Prepare Quote"
@@ -66,28 +71,11 @@ const Quotes = (data, fetchPaginatedData) => {
 
     fetchPaginatedData(paginationConfig.current - 1, paginationConfig.pageSize);
   };
-  const handleLogout = () => {
-    navigate("/login");
-    localStorage.clear();
-  };
 
   return (
     <div className="quotes-container" style={{ fontFamily: theme.fontFamily }}>
       {/* Heading */}
-      <div className="quotes-title-container" style={{}}>
-        <Title level={2} className="quotes-heading">
-          Quotes
-        </Title>
-        <Button
-          type="default"
-          danger
-          onClick={handleLogout}
-          style={{ borderRadius: theme.buttonRadius }}
-        >
-          Logout
-        </Button>
-      </div>
-
+      <Navbar title={"Quotes"} />
       <Table
         dataSource={listingData}
         columns={columns}
