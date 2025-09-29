@@ -3,11 +3,10 @@ import api from "./api";
 // Get all quotes
 export const sendOTP = async (payload) => {
   payload = {
-    // phoneNumber: "0000000701",
     ...payload,
     countryCode: "91",
     password: "password",
-    userType: "HOMEOWNER",
+    userType: "INTERIOR",
     deviceId: "IPHONE15PLUS2024",
     deviceOSType: "IOS",
   };
@@ -19,7 +18,7 @@ export const validateOTP = async (payload) => {
     ...payload,
     countryCode: "91",
     password: "password",
-    userType: "HOMEOWNER",
+    userType: "INTERIOR",
     deviceId: "IPHONE15PLUS2024",
     deviceOSType: "IOS",
   };
@@ -31,7 +30,7 @@ export const getQuotesListings = async (current, pageSize) => {
   return response.data;
 };
 
-export const getQuoteByUserID = async () => {
-  const response = await api.get(`/quotes/user/603`);
+export const getQuoteByUserID = async (userId) => {
+  const response = await api.get(`/quotes/user/${userId}`);
   return response.data;
 };

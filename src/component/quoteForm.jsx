@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Form,
   Input,
@@ -15,24 +15,36 @@ import { theme } from "../theme/theme";
 import "./quoteForm.css";
 import { useLocation } from "react-router-dom";
 import Navbar from "./navbar";
+import { getQuoteByUserID } from "../services/service";
 
 const { Title } = Typography;
 
-const QuoteForm = (data) => {
+const QuoteForm = () => {
+  const [data, setData] = useState();
   const [form] = Form.useForm();
   const location = useLocation();
 
   // Create URLSearchParams object
   const queryParams = new URLSearchParams(location.search);
-  console.log(data);
   // Get values
   const homeOwnerName = queryParams.get("homeOwnerName");
   const address = queryParams.get("address");
+  const userId = queryParams.get("userId");
+  const fetchData = async () => {
+    try {
+      const response = await getQuoteByUserID(userId);
+      setData(response.data.response);
+    } catch (error) {
+      console.error("Error fetching quotes:", error);
+    }
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const onFinish = (values) => {
     console.log("Form Submitted:", values);
   };
-
   return (
     <div
       className="quote-form-container"
@@ -69,31 +81,39 @@ const QuoteForm = (data) => {
             </Row>
 
             {/* Dynamic Rooms */}
-            {data?.data?.quoteItems?.map((room) => (
+            {data?.quoteItems?.map((room) => (
               <>
                 {room?.subLevel?.length >= 0 && (
                   <div key={room.id}>
-                    <Title level={4}>{room.roomName}</Title>
-                    {room?.subLevel?.map((item, id) => (
-                      <Row gutter={16} key={item.id}>
-                        <Col span={16}>
-                          <Form.Item label={`Item ${id + 1}`} name={item.id}>
-                            <Input placeholder={`${item.itemName}`} disabled />
-                          </Form.Item>
-                        </Col>
-                        <Col span={8}>
-                          <Form.Item label="Price" name={`${item.id}_price`}>
-                            <Input prefix="₹" type="number" />
-                          </Form.Item>
-                        </Col>
-                        {/* {item.hasQuantity && (
-                      <Col span={8}>
-                        <Form.Item label="Quantity" name={`${item.id}_qty`}>
-                          <Input type="number" placeholder="Qty" />
-                        </Form.Item>
+                    <Row style={{ marginBottom: "10px" }}>
+                      <Col span={16}>
+                        <Title level={4}>{room.roomName}</Title>
                       </Col>
-                    )} */}
-                      </Row>
+                      <Col span={8}>
+                        <Title level={4} style={{ paddingLeft: "12px" }}>
+                          {" "}
+                          Price
+                        </Title>
+                      </Col>
+                    </Row>
+                    {room?.subLevel?.map((item) => (
+                      <>
+                        <Row gutter={16} key={item.id}>
+                          <Col span={16}>
+                            <Form.Item name={item.id}>
+                              <Input
+                                placeholder={`${item.itemName}`}
+                                disabled
+                              />
+                            </Form.Item>
+                          </Col>
+                          <Col span={8}>
+                            <Form.Item name={`${item.id}_price`}>
+                              <Input prefix="₹" type="number" />
+                            </Form.Item>
+                          </Col>
+                        </Row>
+                      </>
                     ))}
                   </div>
                 )}

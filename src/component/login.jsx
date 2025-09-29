@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Input, Button, Typography, Card, message } from "antd";
+import { Form, Input, Button, Typography, Card, message, Radio } from "antd";
 import { theme } from "../theme/theme";
 import { sendOTP, validateOTP } from "../services/service";
 import { useNavigate } from "react-router-dom";
@@ -9,6 +9,7 @@ const { Title } = Typography;
 const Login = () => {
   const [otpSent, setOtpSent] = useState(false);
   const navigate = useNavigate();
+
   const onFinish = async (values) => {
     if (!otpSent) {
       // Send OTP
@@ -95,6 +96,18 @@ const Login = () => {
                 borderColor: theme.inputBorderColor,
               }}
             />
+          </Form.Item>
+
+          {/* User Type */}
+          <Form.Item
+            name="userType"
+            label="User Type"
+            rules={[{ required: true, message: "Please select user type" }]}
+            initialValue="INTERIOR"
+          >
+            <Radio.Group>
+              <Radio value="INTERIOR">INTERIOR</Radio>
+            </Radio.Group>
           </Form.Item>
 
           {/* Submit */}

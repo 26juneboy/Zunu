@@ -4,8 +4,57 @@
   min-height: 100vh;
 }
 
-.quotes-table {
+/* tabs wrapper */
+.quotes-tab {
   margin: 20px;
+  background: #fff;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  font-family: "Roboto", sans-serif;
+}
+
+/* tab navigation */
+.quotes-tab .ant-tabs-nav {
+  margin: 0 0 16px 0;
+  border-bottom: 2px solid #eaeaea;
+}
+
+/* tab label */
+.quotes-tab .ant-tabs-tab {
+  font-weight: 500;
+  font-size: 15px;
+  padding: 8px 20px;
+  color: #2c3e50; /* theme.primaryColor */
+  transition: all 0.3s ease;
+}
+
+/* hover effect */
+.quotes-tab .ant-tabs-tab:hover {
+  color: #3498db; /* theme.secondaryColor */
+}
+
+/* active tab */
+.quotes-tab .ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: #3498db !important; /* theme.secondaryColor */
+  font-weight: 600;
+}
+
+/* underline (ink bar) */
+.quotes-tab .ant-tabs-ink-bar {
+  background: #3498db; /* theme.secondaryColor */
+  height: 3px;
+  border-radius: 3px;
+}
+
+/* tab content */
+.quotes-tab .ant-tabs-content-holder {
+  background: #f9f9f9;
+  padding: 16px;
+  border-radius: 8px;
+}
+
+.quotes-table {
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
