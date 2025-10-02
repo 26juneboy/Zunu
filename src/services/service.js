@@ -71,3 +71,10 @@ export const getDesigns = async () => {
   const response = await api.get(`/designs?workRequestId=7&tags=kitchen`);
   return response.data;
 };
+
+export const deleteDesign = async (designId) => {
+  const response = await api.delete(
+    `/designs?designId=${encodeURIComponent(designId)}`
+  );
+  return response.data;
+};
