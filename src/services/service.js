@@ -29,8 +29,45 @@ export const getQuotesListings = async (current, pageSize) => {
   const response = await api.get(`/listings?page=${current}&size=${pageSize}`);
   return response.data;
 };
+export const getListingsRequestSent = async (current, pageSize) => {
+  const response = await api.get(
+    `/listings/workrequestsSent?page=${current}&size=${pageSize}`
+  );
+  return response.data;
+};
+export const getListingsRequestRecieved = async (current, pageSize) => {
+  const response = await api.get(
+    `/listings/workrequestsReceived?page=${current}&size=${pageSize}`
+  );
+  return response.data;
+};
+export const getListingsQuotesSent = async (current, pageSize) => {
+  const response = await api.get(
+    `/listings/quotesSent?page=${current}&size=${pageSize}`
+  );
+  return response.data;
+};
 
 export const getQuoteByUserID = async (userId) => {
   const response = await api.get(`/quotes/user/${userId}`);
+  return response.data;
+};
+
+export const uploadDesign = async (content) => {
+  const response = await api.post(
+    `/designs/upload?workRequestId=7&tags=kitchen`,
+    content,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }
+  );
+
+  return response.data;
+};
+
+export const getDesigns = async () => {
+  const response = await api.get(`/designs?workRequestId=7&tags=kitchen`);
   return response.data;
 };

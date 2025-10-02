@@ -9,8 +9,4 @@ document.body.style.backgroundColor = theme.backgroundColor;
 document.body.style.margin = 0;
 document.body.style.fontFamily = theme.fontFamily;
 
-createRoot(document.getElementById("root")).render(
-  <StrictMode>
-    <App />
-  </StrictMode>
-);
+createRoot(document.getElementById("root")).render(<App />);
